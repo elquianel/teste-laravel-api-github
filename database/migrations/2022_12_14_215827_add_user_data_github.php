@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table){
             $table->string('auth_type')->default('email');
+            $table->string('login');
+            $table->text('avatar');
+            $table->string('public_repos');
+            $table->string('location');
+            $table->text('bio');
         });
     }
 

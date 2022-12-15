@@ -19,6 +19,7 @@ class AuthController extends Controller
     public function gitRedirect(){
         return Socialite::driver('github')->redirect();
     }
+
     public function gitCallback(Request $r){
         try {
             $userData = Socialite::driver('github')->user();
@@ -33,7 +34,6 @@ class AuthController extends Controller
                 $uuid = Str::uuid()->toString();
 
                 $user = new User();
-                $user->id_github = $userData->user['id'];
                 $user->login = $userData->user['login'];
                 $user->name = $userData->name;
                 $user->email = $userData->email;
@@ -48,10 +48,8 @@ class AuthController extends Controller
                 Auth::login($user);
                 $r->session()->put('user', $user->id);
 
-                return view('/home', $user);
+                return redirect('/home');
             }
-
-
 
         } catch (\Throwable $th) {
             //throw $th;
